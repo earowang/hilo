@@ -8,6 +8,10 @@
 \alias{type_sum}
 \alias{reexports}
 \alias{obj_sum}
+\alias{reexports}
+\alias{is_vector_s3}
+\alias{reexports}
+\alias{pillar_shaft}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -15,7 +19,7 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{pillar}{\code{\link[pillar]{type_sum}}, \code{\link[pillar]{obj_sum}}}
+  \item{pillar}{\code{\link[pillar]{type_sum}}, \code{\link[pillar]{obj_sum}}, \code{\link[pillar]{is_vector_s3}}, \code{\link[pillar]{pillar_shaft}}}
 
   \item{tibble}{\code{\link[tibble]{tbl_sum}}}
 }}
