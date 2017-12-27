@@ -3,8 +3,6 @@
 \docType{import}
 \name{reexports}
 \alias{reexports}
-\alias{tbl_sum}
-\alias{reexports}
 \alias{type_sum}
 \alias{reexports}
 \alias{obj_sum}
@@ -20,7 +18,5 @@ below to see their documentation.
 
 \describe{
   \item{pillar}{\code{\link[pillar]{type_sum}}, \code{\link[pillar]{obj_sum}}, \code{\link[pillar]{is_vector_s3}}, \code{\link[pillar]{pillar_shaft}}}
-
-  \item{tibble}{\code{\link[tibble]{tbl_sum}}}
 }}
 
