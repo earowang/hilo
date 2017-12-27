@@ -39,8 +39,7 @@ dat <- data.frame(t = 1:5, value = 1:5 + rnorm(5))
 newdat <- data.frame(t = 6:10)
 fit <- lm(value ~ t, data = dat)
 pred <- as.data.frame(predict(fit, newdata = newdat, interval = "prediction"))
-pred$PI <- tie(
-  lower = pred$lwr, upper = pred$upr, level = 95L)
+pred$PI <- tie(lower = pred$lwr, upper = pred$upr, level = 95L)
 pred
 ```
 
