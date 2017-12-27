@@ -16,7 +16,7 @@ output:
 knitr::opts_chunk$set(
   collapse = TRUE, comment = "#>", fig.path = "man/figure/"
 )
-options(scipen = 0, digits = 3)
+options(scipen = 1, digits = 1)
 set.seed(2017)
 ```
 

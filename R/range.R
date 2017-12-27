@@ -1,11 +1,19 @@
 #' Construct ranges
 #'
-#' @param lower,upper lower and upper limits
-#' @param level between 0 and 100
+#' @param lower,upper Numerics for lower and upper limits.
+#' @param level Corresponding levels between 0 and 100.
+#'
+#' @return A "range" object
+#' @examples
+#' tie(lower = rnorm(10), upper = rnorm(10) + 5, level = 95)
 #'
 #' @export
 tie <- function(lower, upper, level = NA_integer_) {
-  out <- as.list(data.frame(
+  if (any(upper < lower)) {
+    stop("oops! 'upper' can't be lower than 'lower'.", call. = FALSE)
+  }
+  out <- as.list(data.frame( 
+    # use data.frame to take advantage of recycling "level"
     lower = lower, upper = upper, level = level,
     check.names = FALSE, fix.empty.names = FALSE, 
     stringsAsFactors = FALSE
@@ -14,14 +22,20 @@ tie <- function(lower, upper, level = NA_integer_) {
 }
 
 #' @export
-print.range <- function(x, ..., n = NULL, width = NULL, n_extra = NULL) {
-  print(format(x, ..., n = n, width = width, n_extra = n_extra))
+print.range <- function(x, ...) {
+  print(format(x, ...))
   invisible(x)
 }
 
 #' @export
 format.range <- function(x, ...) {
   format(compact_range(x))
+}
+
+#' @export
+is.na.range <- function(x) {
+  # both lower and upper are NA's
+  rowSums(is.na(as.data.frame(x))[1:2]) == 2
 }
 
 #' @export
@@ -37,8 +51,25 @@ length.range <- function(x) {
 }
 
 #' @export
+rep.range <- function(x, ...) {
+  result <- lapply(x, FUN = rep, ...)
+  attributes(result) <- attributes(x)
+  result
+}
+
+#' @export
 as.data.frame.range <- function(x, row.names = NULL, optional = FALSE, ...) {
   as.data.frame(unclass(x))
+}
+
+#' @export
+duplicated.range <- function(x, incomparables = FALSE, ...) {
+  duplicated(as.data.frame(x), incomparables = incomparables, ...)
+}
+
+#' @export
+unique.range <- function(x, incomparables = FALSE, ...) {
+  x[!duplicated(x, incomparables = incomparables, ...)]
 }
 
 #' @export

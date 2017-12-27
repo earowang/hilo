@@ -7,10 +7,17 @@
 tie(lower, upper, level = NA_integer_)
 }
 \arguments{
-\item{lower, upper}{lower and upper limits}
+\item{lower, upper}{Numerics for lower and upper limits.}
 
-\item{level}{between 0 and 100}
+\item{level}{Corresponding levels between 0 and 100.}
+}
+\value{
+A "range" object
 }
 \description{
 Construct ranges
+}
+\examples{
+tie(lower = rnorm(10), upper = rnorm(10) + 5, level = 95)
+
 }
