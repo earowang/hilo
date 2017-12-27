@@ -1,0 +1,46 @@
+---
+output:
+  github_document:
+    html_preview: false
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+# tsibble
+
+[![Travis-CI Build Status](https://travis-ci.org/earowang/hilo.svg?branch=master)](https://travis-ci.org/earowang/hilo)
+[![Coverage Status](https://img.shields.io/codecov/c/github/earowang/hilo/master.svg)](https://codecov.io/github/earowang/hilo?branch=master)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/hilo)](https://cran.r-project.org/package=hilo)
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE, comment = "#>", fig.path = "man/figure/"
+)
+options(scipen = 0, digits = 3)
+set.seed(2017)
+```
+
+The **hilo** package attempts to build a S3 infrastructure for ranges/intervals. Upon the S3 class `range`, one could define confidence/prediction intervals in a compact way, i.e. one column instead of three (including lower, upper and level). It provides the back-end for `tbl_forecast` in the [tsibble](http://pkg.earo.me/tsibble) package.
+
+## Installation
+
+You could install the development version from Github using
+
+```{r, eval = FALSE}
+# install.packages("devtools")
+devtools::install_github("earowang/hilo")
+```
+
+## How it works
+
+```{r, ex}
+library(hilo)
+dat <- data.frame(t = 1:5, value = 1:5 + rnorm(5))
+newdat <- data.frame(t = 6:10)
+fit <- lm(value ~ t, data = dat)
+pred <- as.data.frame(predict(fit, newdata = newdat, interval = "prediction"))
+pred$PI <- tie(
+  lower = pred$lwr, upper = pred$upr, level = 95L)
+pred
+```
+

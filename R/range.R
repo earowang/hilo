@@ -43,5 +43,5 @@ as.data.frame.range <- function(x, row.names = NULL, optional = FALSE, ...) {
 
 #' @export
 c.range <- function(..., recursive = FALSE) {
-  as_range(as.list(do.call("rbind", (lapply(list(...), as.data.frame)))))
+  as_range(as.list(do.call("rbind", lapply(list(...), as.data.frame))))
 }
