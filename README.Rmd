@@ -20,7 +20,7 @@ options(scipen = 0, digits = 3)
 set.seed(2017)
 ```
 
-The **hilo** package attempts to build a S3 infrastructure for ranges/intervals. Upon the S3 class `range`, one could define confidence/prediction intervals in a compact way, i.e. one column instead of three (including lower, upper and level). It provides the back-end for `tbl_forecast` in the [tsibble](http://pkg.earo.me/tsibble) package.
+A simple class for ranges/intervals. Upon the S3 class `range`, one could define confidence/prediction intervals in a compact way, i.e. one column instead of three (including lower, upper and level). It provides the back-end for `tbl_forecast` in the [tsibble](http://pkg.earo.me/tsibble) package.
 
 ## Installation
 

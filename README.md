@@ -5,7 +5,7 @@ hilo
 
 [![Travis-CI Build Status](https://travis-ci.org/earowang/hilo.svg?branch=master)](https://travis-ci.org/earowang/hilo) [![Coverage Status](https://img.shields.io/codecov/c/github/earowang/hilo/master.svg)](https://codecov.io/github/earowang/hilo?branch=master) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/hilo)](https://cran.r-project.org/package=hilo)
 
-The **hilo** package attempts to build a S3 infrastructure for ranges/intervals. Upon the S3 class `range`, one could define confidence/prediction intervals in a compact way, i.e. one column instead of three (including lower, upper and level). It provides the back-end for `tbl_forecast` in the [tsibble](http://pkg.earo.me/tsibble) package.
+A simple class for ranges/intervals. Upon the S3 class `range`, one could define confidence/prediction intervals in a compact way, i.e. one column instead of three (including lower, upper and level). It provides the back-end for `tbl_forecast` in the [tsibble](http://pkg.earo.me/tsibble) package.
 
 Installation
 ------------
