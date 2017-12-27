@@ -12,6 +12,9 @@ tie <- function(lower, upper, level = NA_integer_) {
   if (any(upper < lower)) {
     stop("oops! 'upper' can't be lower than 'lower'.", call. = FALSE)
   }
+  if (any(level < 0 | level > 100, na.rm = TRUE)) {
+    stop("oops! 'level' can't be negative or greater than 100.", call. = FALSE)
+  }
   out <- as.list(data.frame( 
     # use data.frame to take advantage of recycling "level"
     lower = lower, upper = upper, level = level,
