@@ -20,3 +20,7 @@ compact_range <- function(x, digits = NULL) {
 as_range <- function(x) {
   structure(x, class = "range")
 }
+
+fast_unlist <- function(x) {
+  unlist(x, recursive = FALSE, use.names = FALSE)
+}

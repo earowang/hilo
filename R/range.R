@@ -9,19 +9,24 @@
 #'
 #' @export
 tie <- function(lower, upper, level = NA_integer_) {
-  if (any(upper < lower)) {
+  if (any(upper < lower, na.rm = TRUE)) {
     stop("oops! 'upper' can't be lower than 'lower'.", call. = FALSE)
   }
   if (any(level < 0 | level > 100, na.rm = TRUE)) {
     stop("oops! 'level' can't be negative or greater than 100.", call. = FALSE)
   }
-  out <- as.list(data.frame( 
-    # use data.frame to take advantage of recycling "level"
-    lower = lower, upper = upper, level = level,
-    check.names = FALSE, fix.empty.names = FALSE, 
-    stringsAsFactors = FALSE
-  ))
+  out <- Map(list, lower = lower, upper = upper, level = level)
   structure(out, class = "range")
+}
+
+#' @export
+`$.range` <- function(x, name) {
+  fast_unlist(lapply(x, "[[", name))
+}
+
+#' @export
+`[.range` <- function(x, ..., drop = TRUE) {
+  as_range(NextMethod())
 }
 
 #' @export
@@ -38,44 +43,19 @@ format.range <- function(x, digits = NULL, ...) {
 #' @export
 is.na.range <- function(x) {
   # both lower and upper are NA's
-  rowSums(is.na(as.data.frame(x))[1:2]) == 2
-}
-
-#' @export
-length.range <- function(x) {
-  length(x[[1L]])
-}
-
-#' @export
-`[.range` <- function(x, ..., drop = TRUE) {
-  result <- lapply(x, FUN = "[", ..., drop = drop)
-  attributes(result) <- attributes(x)
-  result
-}
-
-#' @export
-rep.range <- function(x, ...) {
-  result <- lapply(x, FUN = rep, ...)
-  attributes(result) <- attributes(x)
-  result
+  rowSums(is.na(matrix(c(x$lower, x$upper), ncol = 2))) == 2
 }
 
 #' @export
 as.data.frame.range <- function(x, row.names = NULL, optional = FALSE, ...) {
-  as.data.frame(unclass(x))
-}
-
-#' @export
-duplicated.range <- function(x, incomparables = FALSE, ...) {
-  duplicated(as.data.frame(x), incomparables = incomparables, ...)
-}
-
-#' @export
-unique.range <- function(x, incomparables = FALSE, ...) {
-  x[!duplicated(x, incomparables = incomparables, ...)]
+  result <- as.data.frame(format(x))
+  if (!optional) {
+    names(result) <- deparse(substitute(x))[[1L]]
+  }
+  result
 }
 
 #' @export
 c.range <- function(..., recursive = FALSE) {
-  as_range(as.list(do.call("rbind", lapply(list(...), as.data.frame))))
+  as_range(fast_unlist(lapply(list(...), `[`)))
 }
