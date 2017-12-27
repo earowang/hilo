@@ -8,10 +8,10 @@ surround <- function(x, bracket = "(") {
   }
 }
 
-compact_range <- function(x) {
+compact_range <- function(x, digits = NULL) {
   limit <- paste(
-    format(x$lower, justify = "left"),
-    format(x$upper, justify = "left"),
+    format(x$lower, justify = "right", digits = digits),
+    format(x$upper, justify = "right", digits = digits),
     sep = ", "
   )
   surround(limit, "[")

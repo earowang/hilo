@@ -22,14 +22,14 @@ tie <- function(lower, upper, level = NA_integer_) {
 }
 
 #' @export
-print.range <- function(x, ...) {
-  print(format(x, ...))
+print.range <- function(x, ..., digits = NULL) {
+  print(format(x, digits = digits), ...)
   invisible(x)
 }
 
 #' @export
-format.range <- function(x, ...) {
-  format(compact_range(x))
+format.range <- function(x, digits = NULL, ...) {
+  format(compact_range(x, digits = digits), ...)
 }
 
 #' @export
