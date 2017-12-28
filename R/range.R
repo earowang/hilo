@@ -125,35 +125,14 @@ rep.range <- function(x, ...) {
   as_range(NextMethod())
 }
 
-# as.data.frame.POSIXct with minor tweaks
 #' @export
 as.data.frame.range <- function(
   x, row.names = NULL, optional = FALSE, ..., 
   nm = paste(deparse(substitute(x), width.cutoff = 500L), collapse = " ")
 ) {
-  force(nm)
-  nr <- length(x)
-  row_name_lgl <- is.character(row.names) && length(row.names) == nr
-  if (!(is.null(row.names) || row_name_lgl)) {
-    warning(
-      gettextf("'row.names' is not a character vector of length %d.", nr), 
-      domain = NA
-    )
-    row.names <- NULL
-  }
-  if (is.null(row.names)) {
-    if (nr == 0L) {
-      row.names <- character()
-    } else if (length(row.names <- names(x)) != nr || anyDuplicated(row.names)) {
-      row.names <- .set_row_names(nr)
-    }
-  }
-  if (!is.null(names(x))) {
-    names(x) <- NULL
-  }
-  value <- list(format(x))
-  if (!optional) {
-    names(value) <- nm
-  }
-  structure(value, row.names = row.names, class = "data.frame")
+  value <- format(x)
+  as.data.frame.vector(
+    value, row.names = row.names, optional = optional, ..., 
+    nm = nm
+  )
 }
