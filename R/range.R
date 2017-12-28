@@ -1,22 +1,61 @@
 #' Construct ranges
 #'
 #' @param lower,upper Numerics for lower and upper limits.
-#' @param level Corresponding levels between 0 and 100.
+#' @param level Default `NULL` or numbers between 0 and 100.
 #'
 #' @return A "range" object
 #' @examples
-#' tie(lower = rnorm(10), upper = rnorm(10) + 5, level = 95)
+#' tie(lower = rnorm(10), upper = rnorm(10) + 5, level = 95L)
 #'
 #' @export
-tie <- function(lower, upper, level = NA_integer_) {
+tie <- function(lower, upper, level = NULL) {
+  if (any(vapply(list(lower, upper), is.null, logical(1)))) {
+    stop("no default for `lower` or `upper`.", call. = FALSE)
+  }
   if (any(upper < lower, na.rm = TRUE)) {
-    stop("oops! 'upper' can't be lower than 'lower'.", call. = FALSE)
+    stop("'upper' can't be lower than 'lower'.", call. = FALSE)
   }
-  if (any(level < 0 | level > 100, na.rm = TRUE)) {
-    stop("oops! 'level' can't be negative or greater than 100.", call. = FALSE)
+  len <- length(lower)
+  if (is.null(level)) {
+    return(as_range(Map(list, lower = lower, upper = upper)))
+  } else if (any(level < 0 | level > 100, na.rm = TRUE)) {
+    stop("'level' can't be negative or greater than 100.", call. = FALSE)
+  } else if (!(length(level) %in% c(1, len))) {
+    stop(gettextf("'level' should be of length 1 or %d.", len), call. = FALSE)
+  } else {
+    as_range(Map(list, lower = lower, upper = upper, level = level))
   }
-  out <- Map(list, lower = lower, upper = upper, level = level)
-  structure(out, class = "range")
+}
+
+#' Helpers for "range"
+#'
+#' @param x A "range" object.
+#' @rdname helper
+#'
+#' @export
+lower <- function(x) {
+  stopifnot(is_range(x))
+  x$lower
+}
+
+#' @rdname helper
+#' @export
+upper <- function(x) {
+  stopifnot(is_range(x))
+  x$upper
+}
+
+#' @rdname helper
+#' @export
+level <- function(x) {
+  stopifnot(is_range(x))
+  x$level
+}
+
+#' @rdname helper
+#' @export
+is_range <- function(x) {
+  inherits(x, "range")
 }
 
 #' @export

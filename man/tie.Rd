@@ -4,12 +4,12 @@
 \alias{tie}
 \title{Construct ranges}
 \usage{
-tie(lower, upper, level = NA_integer_)
+tie(lower, upper, level = NULL)
 }
 \arguments{
 \item{lower, upper}{Numerics for lower and upper limits.}
 
-\item{level}{Corresponding levels between 0 and 100.}
+\item{level}{Default \code{NULL} or numbers between 0 and 100.}
 }
 \value{
 A "range" object
@@ -18,6 +18,6 @@ A "range" object
 Construct ranges
 }
 \examples{
-tie(lower = rnorm(10), upper = rnorm(10) + 5, level = 95)
+tie(lower = rnorm(10), upper = rnorm(10) + 5, level = 95L)
 
 }
