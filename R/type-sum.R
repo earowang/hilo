@@ -3,7 +3,6 @@ type_sum.range <- function(x) {
   "rng"
 }
 
-
 #' @export
 obj_sum.range <- function(x) {
   rep("rng", length(x))

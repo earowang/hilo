@@ -30,6 +30,11 @@ tie <- function(lower, upper, level = NA_integer_) {
 }
 
 #' @export
+c.range <- function(..., recursive = FALSE) {
+  as_range(fast_unlist(lapply(list(...), `[`)))
+}
+
+#' @export
 print.range <- function(x, ..., digits = NULL) {
   print(format(x, digits = digits), ...)
   invisible(x)
@@ -47,15 +52,50 @@ is.na.range <- function(x) {
 }
 
 #' @export
-as.data.frame.range <- function(x, row.names = NULL, optional = FALSE, ...) {
-  result <- as.data.frame(format(x))
-  if (!optional) {
-    names(result) <- deparse(substitute(x))[[1L]]
-  }
-  result
+duplicated.range <- function(x, incomparables = FALSE, fromLast = FALSE, ...) {
+  mat <- matrix(c(x$lower, x$upper, x$level), ncol = 3)
+  duplicated(mat, incomparables = incomparables, fromLast = fromLast, ...)
 }
 
 #' @export
-c.range <- function(..., recursive = FALSE) {
-  as_range(fast_unlist(lapply(list(...), `[`)))
+unique.range <- function(x, incomparables = FALSE, ...) {
+  x[!duplicated(x, incomparables = incomparables, ...)]
+}
+
+#' @export
+rep.range <- function(x, ...) {
+  as_range(NextMethod())
+}
+
+# as.data.frame.POSIXct with minor tweaks
+#' @export
+as.data.frame.range <- function(
+  x, row.names = NULL, optional = FALSE, ..., 
+  nm = paste(deparse(substitute(x), width.cutoff = 500L), collapse = " ")
+) {
+  force(nm)
+  nr <- length(x)
+  row_name_lgl <- is.character(row.names) && length(row.names) == nr
+  if (!(is.null(row.names) || row_name_lgl)) {
+    warning(
+      gettextf("'row.names' is not a character vector of length %d.", nr), 
+      domain = NA
+    )
+    row.names <- NULL
+  }
+  if (is.null(row.names)) {
+    if (nr == 0L) {
+      row.names <- character()
+    } else if (length(row.names <- names(x)) != nr || anyDuplicated(row.names)) {
+      row.names <- .set_row_names(nr)
+    }
+  }
+  if (!is.null(names(x))) {
+    names(x) <- NULL
+  }
+  value <- list(format(x))
+  if (!optional) {
+    names(value) <- nm
+  }
+  structure(value, row.names = row.names, class = "data.frame")
 }
