@@ -130,9 +130,8 @@ as.data.frame.range <- function(
   x, row.names = NULL, optional = FALSE, ..., 
   nm = paste(deparse(substitute(x), width.cutoff = 500L), collapse = " ")
 ) {
-  value <- format(x)
   as.data.frame.vector(
-    value, row.names = row.names, optional = optional, ..., 
+    x, row.names = row.names, optional = optional, ..., 
     nm = nm
   )
 }
