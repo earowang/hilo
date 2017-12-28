@@ -7,9 +7,10 @@
 tie(lower, upper, level = NULL)
 }
 \arguments{
-\item{lower, upper}{Numerics for lower and upper limits.}
+\item{lower, upper}{A numeric vector of values for lower and upper limits.}
 
-\item{level}{Default \code{NULL} or numbers between 0 and 100.}
+\item{level}{Default \code{NULL} does not include 'level'. Otherwise values of
+length 1 or as length of \code{lower}, expected between 0 and 100.}
 }
 \value{
 A "range" object

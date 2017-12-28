@@ -1,7 +1,8 @@
 #' Construct ranges
 #'
-#' @param lower,upper Numerics for lower and upper limits.
-#' @param level Default `NULL` or numbers between 0 and 100.
+#' @param lower,upper A numeric vector of values for lower and upper limits.
+#' @param level Default `NULL` does not include 'level'. Otherwise values of 
+#' length 1 or as length of `lower`, expected between 0 and 100.
 #'
 #' @return A "range" object
 #' @examples
@@ -56,6 +57,24 @@ level <- function(x) {
 #' @export
 is_range <- function(x) {
   inherits(x, "range")
+}
+
+#' Validate whether values fall in the ranges
+#'
+#' @param x A numeric vector of values.
+#' @param range A vector of ranges.
+#'
+#' @details "b/t" is short for "between". To achieve faster performance, one
+#' could do `dplyr::between(x, lower(rng), upper(rng))`.
+#'
+#' @examples
+#' rng <- tie(lower = rnorm(10), upper = rnorm(10) + 5)
+#' bt(0.2017, rng)
+#'
+#' @export
+bt <- function(x, range) {
+  stopifnot(is.numeric(x) || is_range(range))
+  x >= range$lower & x <= range$upper
 }
 
 #' @export
