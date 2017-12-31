@@ -88,7 +88,7 @@ bt <- function(x, range) {
 }
 
 #' @export
-c.range <- function(..., recursive = FALSE) {
+c.range <- function(...) {
   as_range(fast_unlist(lapply(list(...), `[`)))
 }
 
