@@ -19,7 +19,7 @@ Validate whether values fall in the ranges
 could do \code{dplyr::between(x, lower(rng), upper(rng))}.
 }
 \examples{
-rng <- tie(lower = rnorm(10), upper = rnorm(10) + 5)
+rng <- bind_rng(lower = rnorm(10), upper = rnorm(10) + 5)
 bt(0.2017, rng)
 
 }

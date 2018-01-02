@@ -39,7 +39,7 @@ x <- rnorm(15)
 y <- x + rnorm(15)
 newdat <- data.frame(x = seq(-3, 3, length.out = 10))
 pred <- as.data.frame(predict(lm(y ~ x), newdat, interval = "prediction"))
-pred$PI <- tie(lower = pred$lwr, upper = pred$upr, level = 95L)
+pred$PI <- bind_rng(lower = pred$lwr, upper = pred$upr, level = 95L)
 pred
 ```
 

@@ -1,14 +1,21 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-hilo
-====
 
-[![Travis-CI Build Status](https://travis-ci.org/earowang/hilo.svg?branch=master)](https://travis-ci.org/earowang/hilo) [![Coverage Status](https://img.shields.io/codecov/c/github/earowang/hilo/master.svg)](https://codecov.io/github/earowang/hilo?branch=master) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/hilo)](https://cran.r-project.org/package=hilo)
+# hilo
 
-A simple class for ranges/intervals. Upon the S3 class `range`, one could define confidence/prediction intervals in a compact way, i.e. one column instead of three (including lower, upper and level). It provides the back-end for `tbl_forecast` in the [tsibble](http://pkg.earo.me/tsibble) package.
+[![Travis-CI Build
+Status](https://travis-ci.org/earowang/hilo.svg?branch=master)](https://travis-ci.org/earowang/hilo)
+[![Coverage
+Status](https://img.shields.io/codecov/c/github/earowang/hilo/master.svg)](https://codecov.io/github/earowang/hilo?branch=master)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/hilo)](https://cran.r-project.org/package=hilo)
 
-Installation
-------------
+A simple class for ranges/intervals. Upon the S3 class `range`, one
+could define confidence/prediction intervals in a compact way, i.e. one
+column instead of three (including lower, upper and level). It provides
+the back-end for `tbl_forecast` in the
+[tsibble](http://pkg.earo.me/tsibble) package.
+
+## Installation
 
 You could install the development version from Github using
 
@@ -17,8 +24,7 @@ You could install the development version from Github using
 devtools::install_github("earowang/hilo")
 ```
 
-How it works
-------------
+## How it works
 
 ``` r
 library(hilo)
@@ -26,7 +32,7 @@ x <- rnorm(15)
 y <- x + rnorm(15)
 newdat <- data.frame(x = seq(-3, 3, length.out = 10))
 pred <- as.data.frame(predict(lm(y ~ x), newdat, interval = "prediction"))
-pred$PI <- tie(lower = pred$lwr, upper = pred$upr, level = 95L)
+pred$PI <- bind_rng(lower = pred$lwr, upper = pred$upr, level = 95L)
 pred
 #>     fit   lwr   upr             PI
 #> 1  -4.2 -6.76 -1.54 [-6.76, -1.54]

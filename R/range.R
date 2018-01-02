@@ -6,10 +6,10 @@
 #'
 #' @return A "range" object
 #' @examples
-#' tie(lower = rnorm(10), upper = rnorm(10) + 5, level = 95L)
+#' bind_rng(lower = rnorm(10), upper = rnorm(10) + 5, level = 95L)
 #'
 #' @export
-tie <- function(lower, upper, level = NULL) {
+bind_rng <- function(lower, upper, level = NULL) {
   if (any(vapply(list(lower, upper), is.null, logical(1)))) {
     stop("no default for `lower` or `upper`.", call. = FALSE)
   }
@@ -68,7 +68,7 @@ is_range <- function(x) {
 #' could do `dplyr::between(x, lower(rng), upper(rng))`.
 #'
 #' @examples
-#' rng <- tie(lower = rnorm(10), upper = rnorm(10) + 5)
+#' rng <- bind_rng(lower = rnorm(10), upper = rnorm(10) + 5)
 #' bt(0.2017, rng)
 #'
 #' @export
