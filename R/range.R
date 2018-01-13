@@ -94,7 +94,7 @@ c.range <- function(...) {
 
 #' @export
 print.range <- function(x, ..., digits = NULL) {
-  print(format(x, digits = digits), ...)
+  cat(format(x, digits = digits), sep = "\n")
   invisible(x)
 }
 

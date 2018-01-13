@@ -14,7 +14,13 @@ compact_range <- function(x, digits = NULL) {
     format(x$upper, justify = "right", digits = digits),
     sep = ", "
   )
-  surround(limit, "[")
+  rng <- surround(limit, "[")
+  lvl <- level(x)
+  if (is.null(lvl)) {
+    return(rng)
+  } else {
+    paste0(rng, crayon::underline(lvl))
+  }
 }
 
 as_range <- function(x) {
